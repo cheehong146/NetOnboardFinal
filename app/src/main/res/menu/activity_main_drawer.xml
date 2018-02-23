@@ -3,35 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
 
-    <item android:title="Communicate">
+    <item android:title="General">
+        <menu>
+
+            <item
+                android:id="@+id/nav_dashboard"
+                android:icon="@drawable/ic_apps_black_24dp"
+                android:title="Dashboard"
+                />
+
+            <item
+                android:id="@+id/nav_calendar"
+                android:icon="@drawable/ic_date_range_black_24dp"
+                android:title="Calendar"
+                />
+
+            <item
+                android:id="@+id/nav_leave"
+                android:icon="@drawable/ic_today_black_24dp"
+                android:title="Leave" />
+            <item
+                android:id="@+id/nav_claim"
+                android:icon="@drawable/ic_attach_money_black_24dp"
+                android:title="Claim" />
+        </menu>
+    </item>
+
+    <item android:title="Option">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Change Pin" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Logout" />
         </menu>
     </item>
 

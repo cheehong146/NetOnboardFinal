@@ -1,40 +1,49 @@
 package com.netonboard.netonboard.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import com.netonboard.netonboard.Fragment.MainFragment;
-import com.netonboard.netonboard.Object.GlobalFileIO;
+import com.loopj.android.http.AsyncHttpClient;
+import com.netonboard.netonboard.Fragment.CalendarFragment;
+import com.netonboard.netonboard.Fragment.ClaimFragment;
+import com.netonboard.netonboard.Fragment.DashboardFragment;
+import com.netonboard.netonboard.Fragment.LeaveFragment;
 import com.netonboard.netonboard.R;
 import com.securepreferences.SecurePreferences;
 
-import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
 
     int userId;
     SharedPreferences sharedPreferences;
-    GlobalFileIO fileIO;
-    OkHttpClient client;
+    AsyncHttpClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Dashboard");
+
+        //TODO save fragment data to file in-case no internet connection
+
+        client = new AsyncHttpClient();
+        sharedPreferences = new SecurePreferences(this, "netdeveloper", "loginInfo.xml");
+        userId = sharedPreferences.getInt("userId", -1);
+        String username = sharedPreferences.getString("username", "error");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,15 +53,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        fileIO = new GlobalFileIO(this);
-        client = new OkHttpClient();
-        sharedPreferences = new SecurePreferences(this, "netdeveloper", "loginInfo.xml");
-        userId = sharedPreferences.getInt("userId", -1);
-        loadData();
+        TextView tvUsername = navigationView.getHeaderView(0).findViewById(R.id.tv_drawer_username);
+        tvUsername.setText(username);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.main_frame_container, new MainFragment());
+        DashboardFragment dashboardFragment = new DashboardFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", userId);
+        dashboardFragment.setArguments(bundle);
+        transaction.add(R.id.main_frame_container, dashboardFragment);
         transaction.commit();
     }
 
@@ -66,46 +75,48 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if( id == R.id.nav_dashboard){
+            setTitle("Dashboard");
+            Bundle bundle = new Bundle();
+            bundle.putInt("userId", userId);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            DashboardFragment dashboardFragment = new DashboardFragment();
+            dashboardFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.main_frame_container, dashboardFragment).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_calendar) {
+            setTitle("Company Calendar");
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.main_frame_container, new CalendarFragment()).commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_leave) {
+            setTitle("Leave");
+            Bundle bundle = new Bundle();
+            bundle.putInt("userId", userId);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            LeaveFragment leaveFragment = new LeaveFragment();
+            leaveFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.main_frame_container, leaveFragment).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_claim) {
+            setTitle("Claim");
+            Bundle bundle = new Bundle();
+            bundle.putInt("userId", userId);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            ClaimFragment claimFragment = new ClaimFragment();
+            claimFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.main_frame_container, claimFragment).commit();
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_setting) {
+            startActivity(new Intent(this, ChangePinActivity.class));
+        } else if (id == R.id.nav_logout) {
+            logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,68 +124,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void loadData() {
-
-        loadSupport();
-        loadGarbageCollector();
-        loadLeaveAndClaim();
-        loadUnpaidLeave();
-        loadAnnualLeave();
-
-    }
-    //TODO FIX OKHTTP
-    public void loadSupport() {
-        Request request = new Request.Builder().url("http://cloudsub04.trio-mobile.com/curl/mobile/sos/standby_support.php")
-                .build();
-        try {
-            String body = client.newCall(request).execute().body().string();
-            fileIO.writeToFile(GlobalFileIO.FILENAMESUPPORT, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void logout() {
+        SharedPreferences sharedPreferences = new SecurePreferences(this, "netdeveloper", "loginInfo.xml");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        if (editor.commit())
+            finish();
     }
 
-    public void loadGarbageCollector(){
-        Request request = new Request.Builder().url("http://cloudsub04.trio-mobile.com/curl/mobile/hr_info/garbage_collector.php")
-                .build();
-        try {
-            String body = client.newCall(request).execute().body().string();
-            fileIO.writeToFile(GlobalFileIO.FILENAMEGARBAGECOLLECTOR, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadUnpaidLeave(){
-        Request request = new Request.Builder().url("http://cloudsub04.trio-mobile.com/curl/mobile/hr_info/unpaid_leave_history.php?id="+userId)
-                .build();
-        try {
-            String body = client.newCall(request).execute().body().string();
-            fileIO.writeToFile(GlobalFileIO.FILENAMEUNPAIDLEAVE, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void loadAnnualLeave(){
-        Request request = new Request.Builder().url("http://cloudsub04.trio-mobile.com/curl/mobile/hr_info/annual_leave_history.php?id="+userId)
-                .build();
-        try {
-            String body = client.newCall(request).execute().body().string();
-            fileIO.writeToFile(GlobalFileIO.FILENAMEANNUALLEAVE, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadLeaveAndClaim(){
-        Request request = new Request.Builder().url("http://cloudsub04.trio-mobile.com/curl/mobile/hr_info/general_info.php?id="+userId )
-                .build();
-        try {
-            String body = client.newCall(request).execute().body().string();
-            fileIO.writeToFile(GlobalFileIO.FILENAMELEAVEANDCLAIM, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

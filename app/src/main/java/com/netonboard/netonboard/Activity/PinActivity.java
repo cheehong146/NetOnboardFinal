@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -36,7 +36,7 @@ public class PinActivity extends AppCompatActivity {
 
         tv_pinInfo = findViewById(R.id.tv_pin_header);
         tv_pin_explain = findViewById(R.id.tv_pin_explain);
-        tv_pin_explain.setText("This PIN is to identify that you are the current user of the device.\nThe PIN will only be stored in your current device.");
+        tv_pin_explain.setText("This PIN is to identify that you are the current user of the device. The PIN will only be stored in your current device.");
 
         sharedPreferences = new SecurePreferences(this, "netdeveloper", "loginInfo.xml");
         editor = sharedPreferences.edit();
