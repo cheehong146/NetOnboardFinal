@@ -1,7 +1,6 @@
 package com.netonboard.netonboard.Fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -44,6 +45,7 @@ import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 public class LeaveFragment extends Fragment {
     Button btn_apply_leave;
     Spinner spn_leave_type;
+    TextView tv_annual_balance, tv_no_late_history;
 
     private static final String TAG = "UnpaidLeaveHistory";
     ArrayList<UnpaidLeave> al_unpaid_leave;
@@ -54,15 +56,14 @@ public class LeaveFragment extends Fragment {
     AnnualLeaveAdapter annualLeaveAdapter;
 
     GlobalFileIO fileIO;
-    Handler handlerLeave;
-    Runnable runnableLeave;
 
     int userId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
-        userId = bundle.getInt("userId");
+        if (bundle != null)
+            userId = bundle.getInt("userId");
         super.onCreate(savedInstanceState);
     }
 
@@ -73,8 +74,17 @@ public class LeaveFragment extends Fragment {
         spn_leave_type = view.findViewById(R.id.spn_leave_type);
         table_leave_history = view.findViewById(R.id.leave_history);
         table_leave_history = view.findViewById(R.id.leave_history);
+        tv_annual_balance = view.findViewById(R.id.tv_annual_balance);
+        tv_no_late_history = view.findViewById(R.id.tv_no_late_history);
+        getActivity().setTitle("Leave");
         loadLeaveType();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Leave");
     }
 
     public void loadLeaveType() {
@@ -90,10 +100,12 @@ public class LeaveFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
 
                 if (spn_leave_type.getSelectedItem().toString().equals("Annual Leave")) {
-
+                    tv_no_late_history.setVisibility(View.GONE);
+                    tv_annual_balance.setVisibility(View.GONE);
                     updateAnnualLeave();
                 } else if (spn_leave_type.getSelectedItem().toString().equals("Unpaid Leave")) {
-
+                    tv_no_late_history.setVisibility(View.GONE);
+                    tv_annual_balance.setVisibility(View.GONE);
                     updateUnpaidLeave();
                 }
             }
@@ -143,27 +155,32 @@ public class LeaveFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String body = new String(responseBody);
-                JSONArray jArray;
-                if (body.equals("[]") || body.equals("")) {
-                    Log.i(TAG, "No history");
-                    al_annual_leave.clear();
-                } else {
-                    try {
+                JSONObject listingJObject;
+                try {
+                    listingJObject = new JSONObject(body);
+                    if (listingJObject.getString("listing").equals("false")) {
                         al_annual_leave.clear();
-
-                        jArray = new JSONArray(body);
-                        for (int i = 0; i < jArray.length(); i++) {
-                            JSONObject jAnnualLeaveListObj = jArray.getJSONObject(i);
+                        tv_no_late_history.setVisibility(View.VISIBLE);
+                    } else {
+                        al_annual_leave.clear();
+                        JSONArray listingJArray = listingJObject.getJSONArray("listing");
+                        tv_annual_balance.setVisibility(View.VISIBLE);
+                        tv_annual_balance.setText(listingJObject.getString("balance") + " leave days left");
+                        for (int i = 0; i < listingJArray.length(); i++) {
+                            JSONObject jAnnualLeaveListObj = listingJArray.getJSONObject(i);
                             AnnualLeave leaveObj = new AnnualLeave(jAnnualLeaveListObj.getString("d_apply"), jAnnualLeaveListObj.getString("s_remark"));
                             al_annual_leave.add(leaveObj);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Collections.sort(al_annual_leave, new AnnualLeaveApplyDateComparator());
                     }
-                    annualLeaveAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "History Table Updated");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                Collections.reverse(al_annual_leave);
+                annualLeaveAdapter.notifyDataSetChanged();
+                Log.i(TAG, "History Table Updated");
             }
+
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
@@ -211,14 +228,12 @@ public class LeaveFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String body = new String(responseBody);
                 JSONArray jArray;
-                if (body.equals("[]") || body.equals("")) {
+                al_unpaid_leave.clear();
+                if (body.equals("false") || body.equals("[]") || body.equals("")) {
                     Log.i(TAG, "No history");
-                    //table_leave_history.setEmptyDataIndicatorView(tv_no_server_down_history);
-                    al_unpaid_leave.clear();
+                    tv_no_late_history.setVisibility(View.VISIBLE);
                 } else {
                     try {
-                        al_unpaid_leave.clear();
-
                         jArray = new JSONArray(body);
                         for (int i = 0; i < jArray.length(); i++) {
                             JSONObject jUnpaidLeaveListObj = jArray.getJSONObject(i);
@@ -228,6 +243,7 @@ public class LeaveFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    Collections.reverse(al_unpaid_leave);
                     unpaidLeaveAdapter.notifyDataSetChanged();
                     Log.i(TAG, "History Table Updated");
                 }
@@ -240,7 +256,6 @@ public class LeaveFragment extends Fragment {
         });
     }
 
-
     private static class UnpaidLeaveApplyDateComparator implements Comparator<UnpaidLeave> {
         @Override
         public int compare(UnpaidLeave unpaidLeave, UnpaidLeave t1) {
@@ -252,6 +267,13 @@ public class LeaveFragment extends Fragment {
         @Override
         public int compare(AnnualLeave annualLeave, AnnualLeave t1) {
             return annualLeave.getS_date_apply().compareTo(t1.getS_date_apply());
+        }
+    }
+
+    private static class DateComparator implements Comparator<String> {
+        @Override
+        public int compare(String s, String t1) {
+            return s.compareTo(t1);
         }
     }
 }

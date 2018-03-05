@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_tot_late_minute"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        />
+
+    <de.codecrafters.tableview.SortableTableView
+        android:id="@+id/late_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_tot_late_minute"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"></de.codecrafters.tableview.SortableTableView>
+
+    <TextView
+        android:id="@+id/tv_no_late_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_tot_late_minute"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/no_history"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlackText"
+        android:background="@drawable/custom_layout"/>
+
+
+</RelativeLayout>

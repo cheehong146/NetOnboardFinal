@@ -5,24 +5,45 @@
 
     <Spinner
         android:id="@+id/spn_leave_type"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/custom_spinner" />
+
+    <TextView
+        android:id="@+id/tv_annual_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/custom_spinner"
-        android:layout_marginTop="30dp" />
+        android:layout_below="@id/spn_leave_type"
+        android:layout_marginTop="3dp"
+        android:textAlignment="center"
+        android:text="No history"
+        android:visibility="gone" />
 
     <de.codecrafters.tableview.SortableTableView
         android:id="@+id/leave_history"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/spn_leave_type"
-        />
+        android:layout_below="@+id/tv_annual_balance"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" />
 
+    <TextView
+        android:id="@+id/tv_no_late_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spn_leave_type"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/custom_layout"
+        android:text="@string/no_history"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlackText"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

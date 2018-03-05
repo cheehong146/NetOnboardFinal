@@ -27,6 +27,10 @@
                 android:id="@+id/nav_claim"
                 android:icon="@drawable/ic_attach_money_black_24dp"
                 android:title="Claim" />
+            <item
+                android:id="@+id/nav_late"
+                android:icon="@drawable/ic_access_time_black_24dp"
+                android:title="Late" />
         </menu>
     </item>
 

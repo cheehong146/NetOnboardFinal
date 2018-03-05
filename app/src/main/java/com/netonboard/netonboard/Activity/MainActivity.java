@@ -18,6 +18,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.netonboard.netonboard.Fragment.CalendarFragment;
 import com.netonboard.netonboard.Fragment.ClaimFragment;
 import com.netonboard.netonboard.Fragment.DashboardFragment;
+import com.netonboard.netonboard.Fragment.LateFragment;
 import com.netonboard.netonboard.Fragment.LeaveFragment;
 import com.netonboard.netonboard.R;
 import com.securepreferences.SecurePreferences;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if( id == R.id.nav_dashboard){
+        if (id == R.id.nav_dashboard) {
             setTitle("Dashboard");
             Bundle bundle = new Bundle();
             bundle.putInt("userId", userId);
@@ -113,6 +114,14 @@ public class MainActivity extends AppCompatActivity
             claimFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.main_frame_container, claimFragment).commit();
 
+        } else if (id == R.id.nav_late) {
+            setTitle("Late");
+            Bundle bundle = new Bundle();
+            bundle.putInt("userId", userId);//TODO WHETHER OR NOT TO PASS YEAR TO API
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            LateFragment lateFragment = new LateFragment();
+            lateFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.main_frame_container, lateFragment).commit();
         } else if (id == R.id.nav_setting) {
             startActivity(new Intent(this, ChangePinActivity.class));
         } else if (id == R.id.nav_logout) {

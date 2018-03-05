@@ -1,392 +1,622 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_dashboard_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.netonboard.netonboard.Fragment.DashboardFragment">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!--Dashboard Header-->
-        <TextView
-            android:id="@+id/tv_homepage_dashboard_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:text="Dashboard"
-            android:textColor="@color/CornflowerBlue"
-            android:textSize="20dp"
-            android:textStyle="bold" />
 
-        <!--Dashboard Data-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:weightSum="3">
-            <!--Leave Balance-->
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <RelativeLayout
+                android:id="@+id/homepage_performance_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/custom_layout"
-                android:orientation="horizontal">
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/custom_layout">
 
                 <LinearLayout
-                    android:id="@+id/icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerInParent="true"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_leave_icon_round" />
+                        android:src="@mipmap/ic_performance_round" />
 
-                    <TextView
-                        android:id="@+id/tv_homepage_leave_data"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingTop="8dp"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/DodgerBlue"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="8dp">
+
+                        <LinearLayout
+                            android:id="@+id/performance_first_year_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_homepage_performance_first_year"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_gravity="center"
+                                android:text="2017"
+                                android:textColor="@color/LightBlue"
+                                android:textSize="20sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_homepage_performance_first_score"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:text="101.00"
+                                        android:textColor="@color/Orange"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="3dp"
+                                        android:text="Score"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_homepage_performance_first_attendance"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:text="97.22"
+                                        android:textColor="@color/Orange"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="3dp"
+                                        android:text="Attendance"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/performance_second_year_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@id/performance_first_year_container"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_homepage_performance_second_year"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_gravity="center"
+                                android:text="2018"
+                                android:textColor="@color/LightBlue"
+                                android:textSize="20sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_homepage_performance_second_score"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:text="101.00"
+                                        android:textColor="@color/Orange"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="3dp"
+                                        android:text="Score"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_homepage_performance_second_attendance"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:text="97.22"
+                                        android:textColor="@color/Orange"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="3dp"
+                                        android:text="Attendance"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/icon"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_homepage_leave_head"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:text="Leave Balance(Days)"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="12dp" />
-                </RelativeLayout>
-
             </RelativeLayout>
 
-            <!--late-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/custom_layout"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/icon_late"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:weightSum="2">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerInParent="true"
-                        android:layout_weight="1"
-                        android:src="@mipmap/ic_alarm_round" />
-
-                    <TextView
-                        android:id="@+id/tv_homepage_late_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="3dp"
-                        android:layout_weight="1"
-                        android:paddingTop="8dp"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/Maroon"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/icon_late"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_homepage_late_head"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:text="Total Late(Min)"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="12dp" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-
-            <!--Claim Available-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/custom_layout"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/icon_claim"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:weightSum="2">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerInParent="true"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_claim_available_round" />
-
-                    <TextView
-                        android:id="@+id/tv_homepage_claim_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingTop="8dp"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/YellowGreen"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/icon_claim"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_homepage_claim_head"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:text="Available Claim(RM)"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="12dp" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <!--Standby Support Header-->
-        <LinearLayout
-            android:id="@+id/tv_homepage_support_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:weightSum="12">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="11"
-                android:background="@drawable/ic_call_black_24dp"
-                android:backgroundTint="@color/DarkOrange" />
-
-            <TextView
-                android:id="@+id/tv_homepage_support_header_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:text="Standby Support"
-                android:textColor="@color/CornflowerBlue"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
-        <!--Standby Support Data-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_homepage_support_header"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_layout"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-            <!--Support Data-->
+            <!--Dashboard Data-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:weightSum="3">
+                <!--Leave Balance-->
+                <RelativeLayout
+                    android:id="@+id/layout_dashboard_leave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_layout"
+                    android:orientation="horizontal">
 
-                android:orientation="vertical">
-                <!--Primary Support-->
-                <LinearLayout
+                    <LinearLayout
+                        android:id="@+id/icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_leave_icon_round" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_leave_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:paddingTop="8dp"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/DodgerBlue"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/icon"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_homepage_leave_head"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:text="Leave Balance(Days)"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="12dp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!--late-->
+                <RelativeLayout
+                    android:id="@+id/layout_dashboard_late"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:weightSum="2">
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_layout"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_homepage_support_primary_desc"
+                    <LinearLayout
+                        android:id="@+id/icon_late"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_alarm_round" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_late_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:paddingLeft="3dp"
+                            android:paddingTop="8dp"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/Maroon"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Primary Support:"
-                        android:textColor="@color/RoyalBlue"
+                        android:layout_below="@+id/icon_late"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1">
 
-                        android:textSize="16dp" />
+                        <TextView
+                            android:id="@+id/tv_homepage_late_head"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:text="Total Late(Min)"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="12dp" />
+                    </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_homepage_support_primary_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:paddingLeft="10dp"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-                <!--Secondary Support-->
-                <LinearLayout
+                </RelativeLayout>
+
+
+                <!--Claim Available-->
+                <RelativeLayout
+                    android:id="@+id/layout_dashboard_claim"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="2">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_layout"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_homepage_support_secondary_desc"
+                    <LinearLayout
+                        android:id="@+id/icon_claim"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_claim_available_round" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_claim_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:paddingTop="8dp"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/YellowGreen"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Secondary Support:"
-                        android:textColor="@color/RoyalBlue"
-                        android:textSize="16dp" />
+                        android:layout_below="@+id/icon_claim"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/tv_homepage_support_secondary_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:paddingLeft="10dp"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_homepage_claim_head"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:text="Available Claim(RM)"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="12dp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-
-        </RelativeLayout>
-
-        <!--Garbage Collector Header-->
-        <LinearLayout
-            android:id="@+id/tv_homepage_garbage_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:weightSum="12">
-
-            <ImageView
+            <!--Standby Support Header-->
+            <LinearLayout
+                android:id="@+id/tv_homepage_support_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="11"
-                android:background="@drawable/ic_delete_black_24dp"
-                android:backgroundTint="@color/DarkOrange" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:weightSum="12">
 
-            <TextView
-                android:id="@+id/tv_homepage_garbage_header_text"
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="11"
+                    android:background="@drawable/ic_call_black_24dp"
+                    android:backgroundTint="@color/DarkOrange" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_support_header_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="Standby Support"
+                    android:textColor="@color/CornflowerBlue"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+            <!--Standby Support Data-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:text="Garbage Collector"
-                android:textColor="@color/CornflowerBlue"
-                android:textSize="18dp" />
+                android:layout_below="@id/tv_homepage_support_header"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_layout"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <!--Support Data-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
+                    android:orientation="vertical">
+                    <!--Primary Support-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_primary_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Primary Support:"
+                            android:textColor="@color/RoyalBlue"
+
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_primary_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <!--Secondary Support-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_secondary_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Secondary Support:"
+                            android:textColor="@color/RoyalBlue"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_secondary_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <!--Standby Support-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_standby_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Take Over Support:"
+                            android:textColor="@color/RoyalBlue"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tv_homepage_support_takeover_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <!--Garbage Collector Header-->
+            <LinearLayout
+                android:id="@+id/tv_homepage_garbage_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:weightSum="12">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="11"
+                    android:background="@drawable/ic_delete_black_24dp"
+                    android:backgroundTint="@color/DarkOrange" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_garbage_header_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="Garbage Collector"
+                    android:textColor="@color/CornflowerBlue"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+            <!--Garbage Collector Data-->
+            <LinearLayout
+                android:id="@+id/garbage_collector_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/tv_garbage_collector_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@drawable/custom_layout"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorBlackText"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_garbage_collector_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_layout"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorBlackText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/tv_garbage_collector_date_secondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@drawable/custom_layout"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorBlackText"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_garbage_collector_name_secondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_layout"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorBlackText" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
-        <!--Garbage Collector Data-->
-        <LinearLayout
-            android:id="@+id/tv_homepage_misc_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:weightSum="3">
-
-
-            <TextView
-                android:id="@+id/tv_garbage_collector_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="@drawable/custom_layout"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:textColor="@color/colorBlackText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_garbage_collector_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/custom_layout"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:textColor="@color/colorBlackText" />
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

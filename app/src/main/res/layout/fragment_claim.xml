@@ -5,22 +5,22 @@
 
     <de.codecrafters.tableview.SortableTableView
         android:id="@+id/claim_history"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp" />
+
     <TextView
         android:id="@+id/tv_no_claim_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/custom_layout"
         android:text="@string/no_history"
         android:textAlignment="center"
-        android:textColor="@color/colorBlackText"
-        android:background="@drawable/custom_layout"/>
+        android:textColor="@color/colorBlackText" />
 
 </RelativeLayout>

@@ -75,6 +75,12 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Company Calendar");
+    }
+
     public void loadData() {
         currentDate = Calendar.getInstance();
         calendarView.state().edit()
@@ -114,7 +120,7 @@ public class CalendarFragment extends Fragment {
                         tv_onleave.setVisibility(View.VISIBLE);
                         ArrayList<String> arrayList = hm_leaveData.get(serverDateFormat.format(obj.getDate()));
                         for (int i = 0; i < arrayList.size(); i++) {
-                            tv_onleavedata.append(i + 1 + " - " + arrayList.get(i) + "");
+                            tv_onleavedata.append(i + 1 + " - " + arrayList.get(i) + '\n');
                         }
                         break;
                     } else {

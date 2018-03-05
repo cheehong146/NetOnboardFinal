@@ -3,6 +3,7 @@ package com.netonboard.netonboard.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 
 import cz.msebera.android.httpclient.Header;
@@ -34,6 +36,7 @@ import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
  */
 
 public class ClaimFragment extends android.support.v4.app.Fragment {
+    private static final String TAG = "ClaimFragment";
     SortableTableView table_claim;
     ArrayList<Claim> al_claim;
     ClaimAdapter claimAdapter;
@@ -47,9 +50,16 @@ public class ClaimFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         Calendar currentDate = Calendar.getInstance();
-        year = currentDate.YEAR;
+        al_claim = new ArrayList<>();
+        year = currentDate.get(Calendar.YEAR);
         if (bundle != null)
             userId = bundle.getInt("userId");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Claim");
     }
 
     @Nullable
@@ -58,11 +68,12 @@ public class ClaimFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_claim, container, false);
         tv_no_claim_history = (TextView) view.findViewById(R.id.tv_no_claim_history);
         table_claim = (SortableTableView) view.findViewById(R.id.claim_history);
-        loadClaimData(userId, year);
+        getActivity().setTitle("Claim");
+        loadClaimData();
         return view;
     }
 
-    public void loadClaimData(final int userId, final int year) {
+    public void loadClaimData() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://cloudsub04.trio-mobile.com/curl/mobile/hr_info/claim_history.php?id=" + userId + "&y=" + year, new AsyncHttpResponseHandler() {
             @Override
@@ -91,44 +102,37 @@ public class ClaimFragment extends android.support.v4.app.Fragment {
             String[] table_header = {"Date", "Remark", "Total"};
             table_claim.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), table_header));
             table_claim.setColumnComparator(0, new ClaimDateComparator());
-
             table_claim.setHeaderBackgroundColor(getResources().getColor(R.color.colorTextAreaBG));
             int colorEvenRow = getResources().getColor(R.color.colorTableRowEven);
             int colorOddRow = getResources().getColor(R.color.colorTableRowOdd);
-
             table_claim.setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(colorEvenRow, colorOddRow));
+
+            claimAdapter = new ClaimAdapter(getContext(), al_claim);
+            table_claim.setDataAdapter(claimAdapter);
         }
         loadClaim(body);
     }
 
     public void loadClaim(String body) {
-        JSONArray jArray;
-        if (body.equals("[]") || body.equals("") || body.equals("false")) {
-
+        if (body.equals("false")) {
             tv_no_claim_history.setVisibility(View.VISIBLE);
         } else {
             try {
+                JSONArray jsonArray = new JSONArray(body);
                 tv_no_claim_history.setVisibility(View.INVISIBLE);
                 al_claim.clear();
-
-                jArray = new JSONArray(body);
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject jClaimListObj = jArray.getJSONObject(i);
-                    Claim claimObj = new Claim(jClaimListObj.getString("d_submit"),
-                            jClaimListObj.getString("s_particulars"),
-                            jClaimListObj.getString("f_total"));
-                    al_claim.add(claimObj);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    al_claim.add(new Claim(jsonObject.getString("d_submit"), jsonObject.getString("s_particulars"), jsonObject.getString("f_total")));
                 }
-
-                claimAdapter = new ClaimAdapter(getContext(), al_claim);
-                table_claim.setDataAdapter(claimAdapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            Collections.reverse(al_claim);
             claimAdapter.notifyDataSetChanged();
-
         }
     }
+
 
     private static class ClaimDateComparator implements Comparator<Claim> {
         @Override
