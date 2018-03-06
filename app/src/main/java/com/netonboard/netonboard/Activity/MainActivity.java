@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setTitle("Dashboard");
 
-        //TODO save fragment data to file in-case no internet connection
-
         client = new AsyncHttpClient();
         sharedPreferences = new SecurePreferences(this, "netdeveloper", "loginInfo.xml");
         userId = sharedPreferences.getInt("userId", -1);
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_late) {
             setTitle("Late");
             Bundle bundle = new Bundle();
-            bundle.putInt("userId", userId);//TODO WHETHER OR NOT TO PASS YEAR TO API
+            bundle.putInt("userId", userId);
             FragmentManager fragmentManager = getSupportFragmentManager();
             LateFragment lateFragment = new LateFragment();
             lateFragment.setArguments(bundle);

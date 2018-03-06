@@ -19,11 +19,15 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.netonboard.netonboard.Object.GlobalFileIO;
+import com.netonboard.netonboard.Object.PerformanceObj;
 import com.netonboard.netonboard.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -78,7 +82,7 @@ public class DashboardFragment extends Fragment implements SwipeRefreshLayout.On
 
     public void viewListener(View view) {
         RelativeLayout leaveLayout = view.findViewById(R.id.layout_dashboard_leave);
-        RelativeLayout lateLayout = view.findViewById(R.id.layout_dashboard_late);//TODO CLICK TO REPLACE WITH LATE FRAGMENT
+        RelativeLayout lateLayout = view.findViewById(R.id.layout_dashboard_late);
         RelativeLayout claimLayout = view.findViewById(R.id.layout_dashboard_claim);
 
         leaveLayout.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +216,7 @@ public class DashboardFragment extends Fragment implements SwipeRefreshLayout.On
                 TextView tvSecondYear = view.findViewById(R.id.tv_homepage_performance_second_year);
                 TextView tvSecondScore = view.findViewById(R.id.tv_homepage_performance_second_score);
                 TextView tvSecondAttendance = view.findViewById(R.id.tv_homepage_performance_second_attendance);
+                ArrayList<PerformanceObj> al_performance = new ArrayList<>();
                 try {
                     String body = new String(responseBody);
                     JSONObject jsonObject = new JSONObject(body);
@@ -220,7 +225,21 @@ public class DashboardFragment extends Fragment implements SwipeRefreshLayout.On
                     String total_late = jsonObject.getString("total_late");
                     tvClaim.setText(available_claim);
                     tvLeave.setText(leave_balance);
-                    tvLate.setText(total_late);//TODO ASK SHADOW API CHANGE TO ARRAY
+                    tvLate.setText(total_late);
+
+                    JSONObject performance = jsonObject.getJSONObject("performance");
+                    for (Iterator<String> iter = performance.keys(); iter.hasNext(); ) {
+                        String key = iter.next();
+                        al_performance.add(new PerformanceObj(key
+                                , (float) performance.getJSONObject(key).getDouble("score")
+                                , (float) performance.getJSONObject(key).getDouble("f_attendance_preformance")));
+                    }
+                    tvFirstYear.setText(al_performance.get(0).getYear());
+                    tvFirstScore.setText(String.format("%.2f", al_performance.get(0).getScore()));
+                    tvFirstAttendance.setText(String.format("%.2f", al_performance.get(0).getAttendance()));
+                    tvSecondYear.setText(al_performance.get(1).getYear());
+                    tvSecondScore.setText(String.format("%.2f", al_performance.get(1).getScore()));
+                    tvSecondAttendance.setText(String.format("%.2f", al_performance.get(1).getAttendance()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     tvClaim.setText("Failed to load data");

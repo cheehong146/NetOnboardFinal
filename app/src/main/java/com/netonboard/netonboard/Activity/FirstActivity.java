@@ -53,7 +53,6 @@ public class FirstActivity extends AppCompatActivity {
                 }else{
                     spinner.setVisibility(View.INVISIBLE);
                     startActivity(new Intent(FirstActivity.this, LoginActivity.class));
-                    //TODO web must return more than false if wrong password to tell user if wrong password
                     finish();
                 }
             }

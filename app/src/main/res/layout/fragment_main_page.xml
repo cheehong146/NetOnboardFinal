@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/homepage_performance_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -27,14 +27,14 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:src="@mipmap/ic_performance_round" />
 
                     <RelativeLayout
@@ -42,7 +42,8 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="8dp">
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="3dp">
 
                         <LinearLayout
                             android:id="@+id/performance_first_year_container"
@@ -75,7 +76,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
-                                        android:text="101.00"
+                                        android:text="XX.XX"
                                         android:textColor="@color/Orange"
                                         android:textSize="14sp" />
 
@@ -97,7 +98,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
-                                        android:text="97.22"
+                                        android:text="XX.XX"
                                         android:textColor="@color/Orange"
                                         android:textSize="14sp" />
 
@@ -229,6 +230,7 @@
                             android:paddingTop="8dp"
                             android:textAlignment="textStart"
                             android:textColor="@color/DodgerBlue"
+                            android:text="XX"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -289,6 +291,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="3dp"
                             android:paddingTop="8dp"
+                            android:text="XX"
                             android:textAlignment="textStart"
                             android:textColor="@color/Maroon"
                             android:textSize="20dp"
@@ -350,6 +353,7 @@
                             android:paddingTop="8dp"
                             android:textAlignment="textStart"
                             android:textColor="@color/YellowGreen"
+                            android:text="XX"
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>

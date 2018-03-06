@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        //TODO FAILURE TO LOAD NAME LIST
                     }
                 });
     }
